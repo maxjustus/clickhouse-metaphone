@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION Expect AS (result, input, expected, message) -> (
     SELECT if(expected != result,
-        '!!! FAIL --- ' || message || ' --- given: "' || input || '" ' || 'expected: "' || expected || '" got: "' || result || '"',
+        '!!! FAIL --- ' || message || ' --- given: "' || toString(input) || '" ' || 'expected: "' || toString(expected) || '" got: "' || toString(result) || '"',
         '    PASS --- ' || message)
 );
 
@@ -103,3 +103,11 @@ SELECT Expect(metaphone('penguin'), 'penguin', 'PNKN', 'metaphone: should return
 SELECT Expect(metaphone('garbonzo'), 'garbonzo', 'KRBNS', 'metaphone: should return the correct metaphone encoding');
 SELECT Expect(metaphone('lightning'), 'lightning', 'LTNNK', 'metaphone: should return the correct metaphone encoding');
 SELECT Expect(metaphone('light'), 'light', 'LT', 'metaphone: should return the correct metaphone encoding');
+
+select Expect(symspellD1('phonetics'), 'phonetics',
+    ['HONETICS','PONETICS','PHNETICS','PHOETICS','PHONTICS','PHONEICS','PHONETCS','PHONETIS','PHONETIC','PHONETICS'],
+    'symspellD1: should return all delete distance 1 permutations');
+
+select Expect(symspellD2('max'), 'max',
+    ['AX', 'MX', 'MA','MAX','X', 'A', 'M'],
+    'symspellD1: should return all delete distance 2 permutations');
