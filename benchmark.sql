@@ -1,0 +1,14 @@
+SELECT metaphone('phonetics');
+SELECT metaphone('transition');
+SELECT metaphone('astronomical');
+SELECT metaphone('buzzard');
+SELECT metaphone('wonderer');
+SELECT metaphone('district');
+SELECT metaphone('hockey');
+SELECT metaphone('capital');
+SELECT metaphone('penguin');
+SELECT metaphone('garbonzo');
+SELECT metaphone('lightning');
+SELECT metaphone('geophrey');
+SELECT metaphone('michaelangelo');
+SELECT metaphone('light');
