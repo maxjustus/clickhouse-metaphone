@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION Expect AS (result, input, expected, message) -> (
     SELECT if(expected != result,
         '!!! FAIL --- ' || message || ' --- given: "' || toString(input) || '" ' || 'expected: "' || toString(expected) || '" got: "' || toString(result) || '"',
-        '    PASS --- ' || message)
+        '    PASS --- ' || message || ' --- given: "' || toString(input) || '" ' || 'expected: "' || toString(expected))
 );
 
 -- Test cases for _metaphoneDropG
@@ -111,3 +111,47 @@ select Expect(symspellD1('phonetics'), 'phonetics',
 select Expect(symspellD2('max'), 'max',
     ['AX', 'MX', 'MA','MAX','X', 'A', 'M'],
     'symspellD1: should return all delete distance 2 permutations');
+
+-- Test cases for caverphone
+SELECT Expect(caverphone('Peter'), 'Peter', 'PTA1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Peady'), 'Peady', 'PTA1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Jackson'), 'Jackson', 'YKSN111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Tremain'), 'Tremain', 'TRMN111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Smith'), 'Smith', 'SMT1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Gough'), 'Gough', 'KA11111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Williams'), 'Williams', 'WLMS111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Brown'), 'Brown', 'PRN1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Wilson'), 'Wilson', 'WSN1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Lee'), 'Lee', 'LA11111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Thompson'), 'Thompson', 'TMPSN11111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Anderson'), 'Anderson', 'ANTSN11111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Catherine'), 'Catherine', 'KTRN111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Elizabeth'), 'Elizabeth', 'ALSPT11111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Margaret'), 'Margaret', 'MKRT111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Nathaniel'), 'Nathaniel', 'NTNA111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Stephanie'), 'Stephanie', 'STFNA11111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Zachary'), 'Zachary', 'SKRA111111', 'caverphone: should return the correct Caverphone encoding');
+
+-- Additional test cases for caverphone
+SELECT Expect(caverphone('add'), 'add', 'AT11111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('eat'), 'eat', 'AT11111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('hold'), 'hold', 'AT11111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('orange'), 'orange', 'ARNK111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('test'), 'test', 'TST1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('ready'), 'ready', 'RTA1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('апельсин'), 'апельсин', '1111111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('ብርቱካናማ'), 'ብርቱካናማ', '1111111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('کینو'), 'کینو', '1111111111', 'caverphone: should return the correct Caverphone encoding');
+
+-- Additional provided Caverphone test cases
+SELECT Expect(caverphone('mayer'), 'mayer', 'MA11111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('meier'), 'meier', 'MA11111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Henrichsen'), 'Henrichsen', 'ANRKSN1111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Henricsson'), 'Henricsson', 'ANRKSN1111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Henriksson'), 'Henriksson', 'ANRKSN1111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Hinrichsen'), 'Hinrichsen', 'ANRKSN1111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Stevenson'), 'Stevenson', 'STFNSN1111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Peter'), 'Peter', 'PTA1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Karleen,'), 'Karleen,', 'KLN1111111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Thompson'), 'Thompson', 'TMPSN11111', 'caverphone: should return the correct Caverphone encoding');
+SELECT Expect(caverphone('Whitlam'), 'Whitlam', 'WTLM111111', 'caverphone: should return the correct Caverphone encoding');
